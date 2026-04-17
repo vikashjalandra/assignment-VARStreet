@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Environment variables and local config
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.pid.lock
+
+# Build and generated artifacts
+backend/dist/
+backend/generated/prisma/
+frontend/build/
+
+# Test output
+coverage/
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+

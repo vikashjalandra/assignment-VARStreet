@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project{
+  id          Int      @id @default(autoincrement())
+  name        String   @unique @db.VarChar(100)
+  description String?  @db.VarChar(300)
+  createdAt   DateTime @default(now())
+  tasks       Task[]
+}
+
+enum Priority {
+  Low
+  Medium
+  High
+  Critical
+}
+
+enum Status {
+  Todo
+  InProgress
+  Review
+  Done
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  projectId   Int
+  title       String   @db.VarChar(150)
+  description String?  @db.VarChar(1000)
+  priority    Priority
+  status      Status
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  comments    Comment[]
+}
+
+model Comment{
+  id        Int      @id @default(autoincrement())
+  taskId    Int
+  author    String   @db.VarChar(50)
+  body      String   @db.VarChar(500)
+  createdAt DateTime @default(now())
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+}
